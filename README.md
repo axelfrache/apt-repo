@@ -6,12 +6,15 @@ Un dépôt APT local sécurisé avec GPG pour héberger des paquets Debian perso
 
 ```
 pinky-apt-repo/
-├── dists/               # Métadonnées du dépôt
-├── pool/                # Stockage des paquets .deb
-├── keys/                # Clés GPG pour la signature
-├── scripts/             # Scripts d'automatisation
-├── .gitignore
-├── README.md
+│── dists/               # Métadonnées du dépôt
+│── pool/                # Stockage des paquets .deb
+│── keys/                # Clés GPG pour la signature
+│── scripts/             # Scripts d'automatisation
+│── nginx/               # Configuration Nginx
+│   └── default.conf      # Fichier de config Nginx
+│── docker-compose.yml    # Définition des services Docker
+│── .gitignore
+│── README.md
 └── Makefile             # Automatisation des tâches
 ```
 
@@ -62,6 +65,29 @@ Pour utiliser ce dépôt sur un autre système :
    ```bash
    sudo apt-get update
    sudo apt-get install nom-du-paquet
+   ```
+
+## Hébergement avec Docker
+
+Le dépôt peut être facilement hébergé via Nginx dans un conteneur Docker :
+
+1. Démarrer le serveur Nginx :
+   ```bash
+   docker-compose up -d
+   ```
+
+2. Accéder au dépôt :
+   - Localement : http://localhost:8080
+   - Depuis un autre poste sur le réseau : http://<IP_DU_SERVEUR>:8080
+
+3. Arrêter le serveur :
+   ```bash
+   docker-compose down
+   ```
+
+4. Visualiser les logs :
+   ```bash
+   docker-compose logs -f
    ```
 
 ## Maintenance

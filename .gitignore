@@ -1,4 +1,6 @@
 # Fichiers générés par le dépôt APT
+*.deb
+*.gz
 dists/*/Release
 dists/*/Release.gpg
 dists/*/InRelease
