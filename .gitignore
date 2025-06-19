@@ -1,0 +1,27 @@
+# Fichiers générés par le dépôt APT
+dists/*/Release
+dists/*/Release.gpg
+dists/*/InRelease
+dists/*/main/binary-*/Packages
+dists/*/main/binary-*/Packages.gz
+
+# Fichiers temporaires
+*.tmp
+*.temp
+*~
+
+# Fichiers de sauvegarde
+*.bak
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Ne pas ignorer les répertoires vides
+!dists/
+!dists/stable/
+!dists/stable/main/
+!dists/stable/main/binary-amd64/
+!pool/
+!pool/main/
+!keys/
