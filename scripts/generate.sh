@@ -28,8 +28,8 @@ gzip -9c "dists/$DIST_NAME/$COMPONENT/binary-$ARCH/Packages" > "dists/$DIST_NAME
 
 echo "📝 Génération du fichier Release..."
 
-# Date actuelle au format UTC (plus compatible)
-DATE=$(date -u '+%a, %d %b %Y %H:%M:%S UTC')
+# Date actuelle au format RFC2822 en anglais (obligatoire pour APT)
+DATE=$(LC_ALL=C date -R -u)
 
 # Création du fichier Release
 cat > "dists/$DIST_NAME/Release" << EOF
