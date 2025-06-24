@@ -28,8 +28,8 @@ gzip -9c "dists/$DIST_NAME/$COMPONENT/binary-$ARCH/Packages" > "dists/$DIST_NAME
 
 echo "📝 Génération du fichier Release..."
 
-# Date actuelle au format RFC2822
-DATE=$(date -R)
+# Date actuelle au format UTC (plus compatible)
+DATE=$(date -u '+%a, %d %b %Y %H:%M:%S UTC')
 
 # Création du fichier Release
 cat > "dists/$DIST_NAME/Release" << EOF
@@ -43,7 +43,6 @@ Components: $COMPONENT
 Description: $REPO_NAME
 EOF
 
-# Ajout des checksums au fichier Release
 {
   echo "MD5Sum:"
   find "dists/$DIST_NAME" -type f -not -path "*/Release*" -exec bash -c 'echo " $(md5sum "$1" | cut -d" " -f1) $(stat -c%s "$1") ${1#dists/stable/}"' _ {} \;
@@ -53,7 +52,6 @@ EOF
   find "dists/$DIST_NAME" -type f -not -path "*/Release*" -exec bash -c 'echo " $(sha256sum "$1" | cut -d" " -f1) $(stat -c%s "$1") ${1#dists/stable/}"' _ {} \;
 } >> "dists/$DIST_NAME/Release"
 
-# Signature du fichier Release si une clé GPG est disponible
 if gpg --list-secret-keys "$GPG_KEY_EMAIL" > /dev/null 2>&1; then
   echo "🔐 Signature du fichier Release avec GPG..."
   gpg --default-key "$GPG_KEY_EMAIL" -abs -o "dists/$DIST_NAME/Release.gpg" "dists/$DIST_NAME/Release"
